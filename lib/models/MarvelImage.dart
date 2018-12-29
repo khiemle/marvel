@@ -14,6 +14,6 @@ class MarvelImage {
   factory MarvelImage.fromJson(Map<String, dynamic> json) => _$MarvelImageFromJson(json);
 
   getUrl() => "$path/standard_medium.$extension";
-  getPortraitUrl() => "$path/portrait_fantastic.$extension";
+  getPortraitUrl() => "$path/portrait_incredible.$extension";
 
 }
