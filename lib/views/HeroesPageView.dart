@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marvel/pages/HeroesPage.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:marvel/models/Hero.dart' as Marvel;
+import 'package:flare_flutter/flare_actor.dart';
 
 class HeroesPageView extends HeroesPageState {
   @override
@@ -18,7 +19,16 @@ class HeroesPageView extends HeroesPageState {
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    child: FlareActor(
+                          "assets/gear.flr",
+                          animation: "rotating",
+                        ),
+                  ),
+                );
               }
             } else {
               return Center(child: CircularProgressIndicator());
