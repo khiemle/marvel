@@ -1,4 +1,6 @@
+import 'package:marvel/models/Comic.dart';
 import 'package:marvel/models/Hero.dart';
+import 'package:marvel/network/responses/ComicsResponse.dart';
 import 'package:marvel/viewmodels/IMarvelRepository.dart';
 import 'package:marvel/network/responses/CharactersResponse.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +31,18 @@ class RemoteMarvelRepository implements IMarvelRepository {
     Map charactersMap = jsonDecode(response.body);
     var charactersResponse = CharactersResponse.fromJson(charactersMap);
     return charactersResponse.data.results;
+  }
+
+  @override
+  Future<List<Comic>> getComics(int limit, int offset) async {
+    final timeStamp = new DateTime.now().millisecondsSinceEpoch;
+    final hash = generateMd5('$timeStamp$_privateKey$_publicKey');
+    final params = "format=comic&dateDescriptor=thisMonth&orderBy=onsaleDate";
+
+    var response = await http.get('$_baseUrl/v1/public/comics?limit=$limit&offset=$offset&ts=$timeStamp&apikey=$_publicKey&hash=$hash&$params');
+    Map comicsMap = jsonDecode(response.body);
+    var comicsResponse = ComicsResponse.fromJson(comicsMap);
+    return comicsResponse.data.results;
   }
 
 }

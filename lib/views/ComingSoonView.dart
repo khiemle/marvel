@@ -8,7 +8,7 @@ class ComingSoonView extends StatelessWidget {
         "assets/Filip.flr",
         alignment: Alignment.center,
         fit: BoxFit.contain,
-        animation: "united",
+        animation: "idle",
       ));
 
 }
