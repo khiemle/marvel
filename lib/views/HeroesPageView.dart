@@ -24,9 +24,9 @@ class HeroesPageView extends HeroesPageState {
                     width: 100,
                     height: 100,
                     child: FlareActor(
-                          "assets/gear.flr",
-                          animation: "rotating",
-                        ),
+                      "assets/gear.flr",
+                      animation: "rotating",
+                    ),
                   ),
                 );
               }
@@ -41,32 +41,54 @@ class HeroesPageView extends HeroesPageState {
 
   Widget _buildHeroesList(List<Marvel.Hero> list) {
     Widget _buildRow(Marvel.Hero hero) {
-      double left_width = MediaQuery.of(context).size.width * 0.25;
-      return Container(
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 16.0),
-              child: Container(
-                  width: left_width,
-                  height: left_width,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new NetworkImage(hero.thumbnail.getUrl())))),
-            ),
-            Text(
-              hero.name,
-              textAlign: TextAlign.left,
-            ),
-          ],
-        ),
+      double leftWidth = MediaQuery.of(context).size.width * 0.25;
+      double rightWidth = MediaQuery.of(context).size.width * 0.6;
+      return Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 16.0),
+            child: Container(
+                width: leftWidth,
+                height: leftWidth,
+                decoration: new BoxDecoration(
+                    boxShadow: kElevationToShadow[6],
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new NetworkImage(hero.thumbnail.getUrl())))),
+          ),
+          Column(
+            children: <Widget>[
+              Container(
+                width: rightWidth,
+                child: Text(
+                  hero.name,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              Container(
+                width: rightWidth,
+                child: Text(
+                  hero.description,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
+          ),
+        ],
       );
     }
 
-    return ListView.builder(
+    return ListView.separated(
         padding: const EdgeInsets.all(16.0),
+        separatorBuilder: (BuildContext context, int index) => Divider(
+              color: Colors.black87,
+            ),
         itemCount: list.length,
         itemBuilder: (context, i) {
           return _buildRow(list[i]);

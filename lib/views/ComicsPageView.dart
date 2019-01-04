@@ -45,7 +45,7 @@ class ComicsPageView extends ComicsPageState {
 
   Widget _buildComicsList(List<Comic> list) {
     Widget _buildRow(Comic comic) {
-      double width = MediaQuery.of(context).size.width * 0.8;
+      double width = MediaQuery.of(context).size.width * 0.7;
       double height = width * 324 / 216;
 
       return Container(
@@ -57,28 +57,21 @@ class ComicsPageView extends ComicsPageState {
                   width: width,
                   height: height,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black45,
-                        blurRadius:
-                            20.0, // has the effect of softening the shadow
-                        spreadRadius:
-                            5.0, // has the effect of extending the shadow
-                        offset: Offset(
-                          10.0, // horizontal, move right 10
-                          10.0, // vertical, move down 10
-                        ),
-                      )
-                    ],
+                    boxShadow: kElevationToShadow[6],
                   ),
                   child: Image(
                     fit: BoxFit.fill,
                     image: new NetworkImage(comic.thumbnail.getPortraitUrl()),
                   ),
                 )),
-            Text(
-              comic.title,
-              textAlign: TextAlign.left,
+            Container(
+              width: width,
+              child: Center(
+                child: Text(
+                  comic.title,
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ],
         ),
