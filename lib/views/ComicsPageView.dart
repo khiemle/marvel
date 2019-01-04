@@ -10,34 +10,30 @@ class ComicsPageView extends ComicsPageState {
     return Scaffold(
       body: ScopedModel(
         model: comicsViewModel,
-        child: Container(
-          child: Center(
-            child: FutureBuilder<List<Comic>>(
-              future: comicsViewModel.comics,
-              builder: (context, snapshot) {
-                if (snapshot != null) {
-                  if (snapshot.hasData) {
-                    return _buildComicsList(snapshot.data);
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  } else {
-                    return Center(
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        child: FlareActor(
-                          "assets/gear.flr",
-                          animation: "rotating",
-                        ),
-                      ),
-                    );
-                  }
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-          ),
+        child: FutureBuilder<List<Comic>>(
+          future: comicsViewModel.comics,
+          builder: (context, snapshot) {
+            if (snapshot != null) {
+              if (snapshot.hasData) {
+                return _buildComicsList(snapshot.data);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              } else {
+                return Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    child: FlareActor(
+                      "assets/gear.flr",
+                      animation: "rotating",
+                    ),
+                  ),
+                );
+              }
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );
