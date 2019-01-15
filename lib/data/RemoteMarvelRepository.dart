@@ -27,7 +27,7 @@ class RemoteMarvelRepository implements IMarvelRepository {
     final timeStamp = new DateTime.now().millisecondsSinceEpoch;
     final hash = generateMd5('$timeStamp$_privateKey$_publicKey');
 
-    var response = await http.get('$_baseUrl/v1/public/characters?limit=$limit&offset=$offset&ts=$timeStamp&apikey=$_publicKey&hash=$hash&orderBy=-modified');
+    var response = await http.get('$_baseUrl/v1/public/characters?limit=$limit&offset=$offset&orderBy=-modified&ts=$timeStamp&apikey=$_publicKey&hash=$hash');
     Map charactersMap = jsonDecode(response.body);
     var charactersResponse = CharactersResponse.fromJson(charactersMap);
     return charactersResponse.data.results;
@@ -39,7 +39,7 @@ class RemoteMarvelRepository implements IMarvelRepository {
     final hash = generateMd5('$timeStamp$_privateKey$_publicKey');
     final params = "format=comic&dateDescriptor=thisMonth&orderBy=onsaleDate";
 
-    var response = await http.get('$_baseUrl/v1/public/comics?limit=$limit&offset=$offset&ts=$timeStamp&apikey=$_publicKey&hash=$hash&$params');
+    var response = await http.get('$_baseUrl/v1/public/comics?limit=$limit&offset=$offset&$params&ts=$timeStamp&apikey=$_publicKey&hash=$hash');
     Map comicsMap = jsonDecode(response.body);
     var comicsResponse = ComicsResponse.fromJson(comicsMap);
     return comicsResponse.data.results;
