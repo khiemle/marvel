@@ -46,16 +46,19 @@ class HeroPageView extends HeroPageState {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Container(
-                      width: imageSize,
-                      height: imageSize,
-                      decoration: new BoxDecoration(
-                          boxShadow: kElevationToShadow[6],
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                              fit: BoxFit.fill,
-                              image: new NetworkImage(
-                                  hero.thumbnail.getPortraitUrl())))),
+                  child: Hero(
+                    tag: 'image${hero.id}',
+                    child: Container(
+                        width: imageSize,
+                        height: imageSize,
+                        decoration: new BoxDecoration(
+                            boxShadow: kElevationToShadow[6],
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: new NetworkImage(
+                                    hero.thumbnail.getPortraitUrl())))),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -77,9 +80,6 @@ class HeroPageView extends HeroPageState {
                   ),
                 ),
                 buildListOfficialLinks(hero.urls),
-                Text("Comics"),
-                Text("Series")
-
               ],
             )));
   }

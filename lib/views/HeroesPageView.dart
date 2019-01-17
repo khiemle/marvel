@@ -53,15 +53,18 @@ class HeroesPageView extends HeroesPageState {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 16.0),
-              child: Container(
-                  width: leftWidth,
-                  height: leftWidth,
-                  decoration: new BoxDecoration(
-                      boxShadow: kElevationToShadow[6],
-                      shape: BoxShape.circle,
-                      image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new NetworkImage(hero.thumbnail.getUrl())))),
+              child: Hero(
+                tag: 'image${hero.id}',
+                child: Container(
+                    width: leftWidth,
+                    height: leftWidth,
+                    decoration: new BoxDecoration(
+                        boxShadow: kElevationToShadow[6],
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(hero.thumbnail.getUrl())))),
+              ),
             ),
             Column(
               children: <Widget>[
