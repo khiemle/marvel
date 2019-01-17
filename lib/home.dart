@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/pages/HeroesPage.dart';
 import 'package:marvel/pages/ComicsPage.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,8 +47,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  SearchBar searchBar;
   int _currentTab = 0;
   final List<Widget> listTabViews = [HeroesPage(), ComicsPage()];
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+        title: new Text('Marvel Wiki'),
+        actions: [searchBar.getSearchAction(context)]
+    );
+  }
+
+
+  _MyHomePageState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        setState: setState,
+        onSubmitted: onSubmitted,
+        buildDefaultAppBar: buildAppBar
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      appBar: searchBar.build(context),
       body: listTabViews[_currentTab],
+      key: _scaffoldKey,
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem(
           icon: new Icon(Icons.people),
@@ -84,5 +102,14 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _currentTab = value;
     });
+  }
+
+  void onSubmitted(String value) {
+    if (_currentTab == 0) {
+      HeroesPage heroesPage = listTabViews[_currentTab] as HeroesPage;
+      heroesPage.setSearchKey(value);
+    } else if (_currentTab == 1) {
+
+    }
   }
 }

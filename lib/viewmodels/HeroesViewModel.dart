@@ -22,5 +22,10 @@ class HeroesViewModel extends Model {
     _heroes = marvelRepository?.getHeroes(limit, offset);
     return _heroes != null;
   }
+
+  Future<bool> searchHeroes(int limit, int offset, String searchKey) async{
+    _heroes = marvelRepository?.searchHeroes(limit, offset, searchKey);
+    return _heroes != null;
+  }
 }
 

@@ -45,4 +45,20 @@ class RemoteMarvelRepository implements IMarvelRepository {
     return comicsResponse.data.results;
   }
 
+  @override
+  Future<List<Hero>> searchHeroes(int limit, int offset, String key) async {
+
+    final timeStamp = new DateTime.now().millisecondsSinceEpoch;
+    final hash = generateMd5('$timeStamp$_privateKey$_publicKey');
+
+    var response = await http.get('$_baseUrl/v1/public/characters?name=$key&limit=$limit&offset=$offset&orderBy=-modified&ts=$timeStamp&apikey=$_publicKey&hash=$hash');
+    Map charactersMap = jsonDecode(response.body);
+    var charactersResponse = CharactersResponse.fromJson(charactersMap);
+    return charactersResponse.data.results;
+
+  }
+
+
+
+
 }
