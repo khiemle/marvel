@@ -21,5 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Run this command to generate `g.dart` file while developing
 ```flutter packages pub run build_runner watch```
+## Run this if have any issues relate 
+```flutter packages pub run build_runner clean```
 
 
