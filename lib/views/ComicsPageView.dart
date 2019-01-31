@@ -15,7 +15,13 @@ class ComicsPageView extends ComicsPageState {
           builder: (context, snapshot) {
             if (snapshot != null) {
               if (snapshot.hasData) {
-                return _buildComicsList(snapshot.data);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ComicTitle(),
+                    Expanded(child: _buildComicsList(snapshot.data)),
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               } else {
@@ -41,11 +47,11 @@ class ComicsPageView extends ComicsPageState {
 
   Widget _buildComicsList(List<Comic> list) {
     Widget _buildRow(Comic comic) {
-      double width = MediaQuery.of(context).size.width * 0.7;
+      double width = MediaQuery.of(context).size.width * 0.95;
       double height = width * 324 / 216;
 
       return Container(
-        child: Column(
+        child: Stack(
           children: <Widget>[
             Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 16.0),
@@ -62,11 +68,22 @@ class ComicsPageView extends ComicsPageState {
                 )),
             Container(
               width: width,
-              child: Center(
-                child: Text(
-                  comic.title,
-                  textAlign: TextAlign.center,
-                ),
+              height: height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,8.0),
+                    child: Text(
+                      comic.title,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -81,5 +98,22 @@ class ComicsPageView extends ComicsPageState {
         itemBuilder: (context, i) {
           return _buildRow(list[i]);
         });
+  }
+}
+
+class ComicTitle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+      child: Text(
+        "This Month Comics",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arvo'),
+      ),
+    );
   }
 }
